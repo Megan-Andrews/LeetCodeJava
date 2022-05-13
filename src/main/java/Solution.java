@@ -3,8 +3,6 @@ import java.util.HashMap;
 import static java.lang.Math.*;
 
 public class Solution {
-
-
     /**
      * 1 Two Sum
      *
@@ -95,43 +93,47 @@ public class Solution {
 
     /**
      *  4 Find Median Sorted Arrays
+     *
+     *  In short, you want to find the correct LHS partitions of the arrays such that
+     *  the elements to the right of the partition is the median number
+     *
+     *  *Redo*
      */
     public double findMedianSortedArrays(int[] nums1, int[] nums2) {
         int[] a = nums1.length <= nums2.length ? nums1 : nums2;
         int[] b = nums1.length <= nums2.length ? nums2 : nums1;
 
-        //System.out.println(a[0]);
-        //System.out.println(b[0]);
-
         int totalSize = a.length + b.length;
         int halfSize = totalSize / 2;
 
+        //pointers
         int left = 0;
         int right = a.length - 1;
 
         while(true){
-            int i = (int) floor(((double)left + (double) right) / 2.0); //left index of a's partition
+            int i = (int) floor(((double)left + (double) right) / 2.0); //left index of a's partition aka the middle value
             int j = halfSize - i - 2; //left index of b's partition
-            //System.out.println(left +" " + right+ " " + i);
 
             int Aleft = i >= 0 ? a[i] :  (-1000001);
-            //System.out.println(a[i]);
             int Aright = (i + 1) < a.length ? a[i +1] : (1000001);
             int Bleft = j >= 0 ? b[j] : (-1000001);
             int Bright = (j + 1) < b.length ? b[j + 1] : (1000001);
-            //System.out.println(a[i] + " " + a[i+1] + " " + b[j] + " " + b[j+1]);
-            //System.out.println(Aleft + " " + Aright + " " + Bleft + " " + Bright);
 
+            //Correct partition
             if(Aleft <= Bright & Bleft <= Aright){
-                double minRight = Aright <= Bright ? Aright : Bright;
-                double maxLeft = Aleft > Bleft ? Aleft : Bleft;
-                //System.out.println(minRight + " "+  maxLeft);
+                double minRight = Math.min(Aright, Bright);
+                double maxLeft = Math.max(Aleft, Bleft);
                 return totalSize % 2 != 0 ? minRight :  (maxLeft + minRight)/2;
-            }else if( Aleft > Bright){
-                right = i - 1;
+
+            //Otherwise, update pointers
+            }else if(Aleft > Bright){
+                right = i - 1; // a's partition is too large
             }else{
-                left = i + 1;
+                left = i + 1; // a's partition is too small
             }
         }
     }
+
+
+
 }
