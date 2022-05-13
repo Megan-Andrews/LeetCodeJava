@@ -10,12 +10,12 @@ public class _4findMedianSortedArraysTest {
     @Test
     void testOne() {
         double result = solution.findMedianSortedArrays(new int[]{1,3}, new int[]{2});
-        assertEquals(result, 2);
+        assertEquals( 2, result);
     }
     @Test
     void testTwo() {
         double result = solution.findMedianSortedArrays(new int[]{1,2}, new int[]{3,4});
-        assertEquals(result, 2.5);
+        assertEquals( 2.5, result);
     }
 
 }
